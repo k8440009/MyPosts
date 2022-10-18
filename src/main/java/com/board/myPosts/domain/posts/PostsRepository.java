@@ -1,4 +1,6 @@
 package com.board.myPosts.domain.posts;
 
-public interface PostsRepository extends {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface PostsRepository extends JpaRepository<Posts, Long> {
 }
