@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class PostsApiController {
     private final PostsService postsService;
 
-    @GetMapping("api/v1/posts/{id}") // 조회
+    @GetMapping("/api/v1/posts/{id}") // 조회
     public PostsResponseDto findById(@PathVariable Long id) {
         return postsService.findById(id);
     }
-    @PostMapping("api/v1/posts")
+    @PostMapping("/api/v1/posts")
     public Long save(PostsSaveRequestDto requestDto) {
         return postsService.save(requestDto);
     }
