@@ -4,6 +4,7 @@ import com.board.myPosts.domain.posts.Posts;
 import com.board.myPosts.domain.posts.PostsRepository;
 import com.board.myPosts.web.dto.PostsFindRequestDto;
 
+import com.board.myPosts.web.dto.PostsSaveRequestDto;
 import org.aspectj.lang.annotation.After;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,7 +23,7 @@ import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-@ExtendWith(SpringExtension.class)
+// @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class PostsApiControllerTest {
 
@@ -35,7 +36,8 @@ public class PostsApiControllerTest {
 
     private StringBuilder sb = new StringBuilder();
     private String localHostUrl = "http://localhost:";
-    private String path = "/api/v1/posts/";
+    private String path = "/api/v1/posts";
+    private String path2 = "/api/v1/posts/";
     private Long id = 1L;
     private String title = "title";
     private String content = "content";
@@ -77,5 +79,27 @@ public class PostsApiControllerTest {
 //        assertThat(all.get(0).getId()).isEqualTo(id);
 //        assertThat(all.get(0).getTitle()).isEqualTo(title);
 //        assertThat(all.get(0).getContent()).isEqualTo(content);
+    }
+
+    @Test
+    public void Posts_등록() throws Exception{
+        PostsSaveRequestDto requestDto = PostsSaveRequestDto.builder()
+                .title(title)
+                .content(content)
+                .author(author)
+                .build();
+
+        sb.setLength(0);
+        sb.append(localHostUrl).append(port).append(path);
+
+        String url = sb.toString();
+        // when
+        ResponseEntity<Long> responseEntity = restTemplate.postForEntity(url, requestDto, Long.class);
+        // then
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(responseEntity.getBody()).isGreaterThan(0L);
+        List<Posts> all = postsRepository.findAll();
+        assertThat(all.get(0).getTitle()).isEqualTo(title);
+        assertThat(all.get(0).getContent()).isEqualTo(content);
     }
 }
