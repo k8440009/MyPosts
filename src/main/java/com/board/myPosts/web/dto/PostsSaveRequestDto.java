@@ -5,6 +5,13 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+/**
+ * @Getter, @NoArgsConstructor 어노테이션 없을시
+ * No HttpMessageConverter 에러 발생한다.
+ *
+ * @Since 2022_10_19
+ * @author sungslee
+ */
 @Getter
 @NoArgsConstructor
 public class PostsSaveRequestDto {
