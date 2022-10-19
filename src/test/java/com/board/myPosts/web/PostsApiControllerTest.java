@@ -67,18 +67,15 @@ public class PostsApiControllerTest {
         sb.setLength(0);
         sb.append(localHostUrl).append(port).append(path).append(findId);
 
-        System.out.println(">>>>>>>>>>>>>>>>> url=" + sb.toString());
-
-//        HttpEntity<PostsFindRequestDto> requestEntity = new HttpEntity<>(requestDto);
-//        // when
-//        ResponseEntity <Long> responseEntity = restTemplate.exchange(sb.toString(), HttpMethod.GET, requestEntity, Long.class);
-//        // then
+        // when
+//        ResponseEntity <Long> responseEntity = restTemplate.getForEntity(sb.toString(), Long.class);
+        // then
 //        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
 //        assertThat(responseEntity.getBody()).isGreaterThan(0L);
-//        List<Posts> all = postsRepository.findAll();
-//        assertThat(all.get(0).getId()).isEqualTo(id);
-//        assertThat(all.get(0).getTitle()).isEqualTo(title);
-//        assertThat(all.get(0).getContent()).isEqualTo(content);
+        List<Posts> all = postsRepository.findAll();
+        assertThat(all.get(0).getId()).isEqualTo(id);
+        assertThat(all.get(0).getTitle()).isEqualTo(title);
+        assertThat(all.get(0).getContent()).isEqualTo(content);
     }
 
     @Test

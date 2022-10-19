@@ -2,6 +2,7 @@ package com.board.myPosts.service;
 
 import com.board.myPosts.domain.posts.Posts;
 import com.board.myPosts.domain.posts.PostsRepository;
+import com.board.myPosts.web.dto.PostsFindRequestDto;
 import com.board.myPosts.web.dto.PostsResponseDto;
 import com.board.myPosts.web.dto.PostsSaveRequestDto;
 import lombok.RequiredArgsConstructor;
