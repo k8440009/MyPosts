@@ -1,7 +1,11 @@
 package com.board.myPosts.web.dto;
 
 import com.board.myPosts.domain.posts.Posts;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
+@Getter
 public class PostsResponseDto {
     private Long id;
     private String title;

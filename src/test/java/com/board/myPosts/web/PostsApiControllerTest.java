@@ -4,6 +4,7 @@ import com.board.myPosts.domain.posts.Posts;
 import com.board.myPosts.domain.posts.PostsRepository;
 import com.board.myPosts.web.dto.PostsFindRequestDto;
 
+import com.board.myPosts.web.dto.PostsResponseDto;
 import com.board.myPosts.web.dto.PostsSaveRequestDto;
 import org.aspectj.lang.annotation.After;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,7 +20,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -37,7 +40,6 @@ public class PostsApiControllerTest {
     private StringBuilder sb = new StringBuilder();
     private String localHostUrl = "http://localhost:";
     private String path = "/api/v1/posts";
-    private String path2 = "/api/v1/posts/";
     private Long id = 1L;
     private String title = "title";
     private String content = "content";
@@ -56,22 +58,16 @@ public class PostsApiControllerTest {
                         .author(author)
                 .build());
         Long findId = savedPosts.getId();
-
-        System.out.println(">>>>>>>>>>>>>>>>> findId=" + findId);
-
-        PostsFindRequestDto requestDto = PostsFindRequestDto
-                .builder()
-                .id(findId)
-                .build();
         // url
         sb.setLength(0);
-        sb.append(localHostUrl).append(port).append(path).append(findId);
+        sb.append(localHostUrl).append(port).append("/api/v1/posts/1");
 
+        System.out.println(">>>>>>>>>>>>>>>>> findId=" + findId);
+        System.out.println("URL=" + sb.toString());
         // when
-//        ResponseEntity <Long> responseEntity = restTemplate.getForEntity(sb.toString(), Long.class);
+        ResponseEntity <PostsResponseDto> responseEntity = restTemplate.getForEntity(sb.toString(), PostsResponseDto.class);
         // then
-//        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
-//        assertThat(responseEntity.getBody()).isGreaterThan(0L);
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
         List<Posts> all = postsRepository.findAll();
         assertThat(all.get(0).getId()).isEqualTo(id);
         assertThat(all.get(0).getTitle()).isEqualTo(title);
