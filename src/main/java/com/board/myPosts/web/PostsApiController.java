@@ -1,6 +1,7 @@
 package com.board.myPosts.web;
 
 import com.board.myPosts.service.PostsService;
+import com.board.myPosts.web.dto.PostsFindRequestDto;
 import com.board.myPosts.web.dto.PostsResponseDto;
 import com.board.myPosts.web.dto.PostsSaveRequestDto;
 import lombok.RequiredArgsConstructor;

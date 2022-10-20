@@ -2,6 +2,7 @@ package com.board.myPosts.service;
 
 import com.board.myPosts.domain.posts.Posts;
 import com.board.myPosts.domain.posts.PostsRepository;
+import com.board.myPosts.web.dto.PostsFindRequestDto;
 import com.board.myPosts.web.dto.PostsResponseDto;
 import com.board.myPosts.web.dto.PostsSaveRequestDto;
 import lombok.RequiredArgsConstructor;
@@ -17,8 +18,8 @@ public class PostsService {
         Posts entity = postsRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 사용자 없음. id=" + id));
         return new PostsResponseDto(entity);
-
     }
+
     @Transactional
     public Long save(PostsSaveRequestDto requestDto) {
         return postsRepository.save(requestDto.toEntity()).getId();
