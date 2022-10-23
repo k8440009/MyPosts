@@ -5,6 +5,7 @@ import com.board.myPosts.domain.posts.PostsRepository;
 import com.board.myPosts.web.dto.PostsFindRequestDto;
 import com.board.myPosts.web.dto.PostsResponseDto;
 import com.board.myPosts.web.dto.PostsSaveRequestDto;
+import com.board.myPosts.web.dto.PostsUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,5 +24,13 @@ public class PostsService {
     @Transactional
     public Long save(PostsSaveRequestDto requestDto) {
         return postsRepository.save(requestDto.toEntity()).getId();
+    }
+
+    @Transactional
+    public Long update(Long id, PostsUpdateRequestDto requestDto) {
+        Posts posts = postsRepository.findById(id).orElseThrow(() ->
+                new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
+        posts.update(requestDto.getTitle(), requestDto.getContent());
+        return id;
     }
 }

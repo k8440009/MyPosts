@@ -6,6 +6,7 @@ import com.board.myPosts.web.dto.PostsFindRequestDto;
 
 import com.board.myPosts.web.dto.PostsResponseDto;
 import com.board.myPosts.web.dto.PostsSaveRequestDto;
+import com.board.myPosts.web.dto.PostsUpdateRequestDto;
 import org.aspectj.lang.annotation.After;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -45,6 +46,8 @@ public class PostsApiControllerTest {
     private String content = "content";
     private String author = "author";
 
+    private String title2 = "title2";
+    private String content2 = "content2";
     @BeforeEach
     public void clean() throws Exception{
         postsRepository.deleteAll();
@@ -68,6 +71,7 @@ public class PostsApiControllerTest {
         ResponseEntity <PostsResponseDto> responseEntity = restTemplate.getForEntity(sb.toString(), PostsResponseDto.class);
         // then
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(responseEntity.getBody().getId()).isGreaterThan(0L);
         List<Posts> all = postsRepository.findAll();
         assertThat(all.get(0).getId()).isEqualTo(id);
         assertThat(all.get(0).getTitle()).isEqualTo(title);
@@ -94,5 +98,35 @@ public class PostsApiControllerTest {
         List<Posts> all = postsRepository.findAll();
         assertThat(all.get(0).getTitle()).isEqualTo(title);
         assertThat(all.get(0).getContent()).isEqualTo(content);
+    }
+
+    @Test
+    public void Posts_수정() {
+        Posts savedPosts = postsRepository
+                .save(Posts.builder()
+                        .title(title)
+                        .content(content)
+                        .author(author)
+                        .build());
+
+        Long id = savedPosts.getId();
+
+        PostsUpdateRequestDto requestDto = PostsUpdateRequestDto.builder()
+                .title(title2)
+                .content(content2)
+                .build();
+
+        sb.setLength(0);
+        sb.append(localHostUrl).append(port).append("/api/v1/posts/").append(id);
+        HttpEntity<PostsUpdateRequestDto> requestEntity = new HttpEntity<>(requestDto);
+        // when
+        ResponseEntity<Long> responseEntity = restTemplate.exchange(sb.toString(), HttpMethod.POST, requestEntity, Long.class);
+        // then
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(responseEntity.getBody()).isGreaterThan(0L);
+        List<Posts> all = postsRepository.findAll();
+        assertThat(all.get(0).getTitle()).isEqualTo(title2);
+        assertThat(all.get(0).getContent()).isEqualTo(content2);
+
     }
 }
