@@ -120,13 +120,12 @@ public class PostsApiControllerTest {
         sb.append(localHostUrl).append(port).append("/api/v1/posts/").append(id);
         HttpEntity<PostsUpdateRequestDto> requestEntity = new HttpEntity<>(requestDto);
         // when
-        ResponseEntity<Long> responseEntity = restTemplate.exchange(sb.toString(), HttpMethod.POST, requestEntity, Long.class);
+        ResponseEntity<Long> responseEntity = restTemplate.exchange(sb.toString(), HttpMethod.PUT, requestEntity, Long.class);
         // then
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(responseEntity.getBody()).isGreaterThan(0L);
         List<Posts> all = postsRepository.findAll();
         assertThat(all.get(0).getTitle()).isEqualTo(title2);
         assertThat(all.get(0).getContent()).isEqualTo(content2);
-
     }
 }
