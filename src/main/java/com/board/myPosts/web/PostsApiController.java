@@ -12,7 +12,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class PostsApiController {
     private final PostsService postsService;
-
+    @GetMapping("/api/hello")
+    public String test() {
+        return "Hello World!";
+    }
     @GetMapping("/api/v1/posts/{id}") // 조회
     public PostsResponseDto findById(@PathVariable Long id) {
         return postsService.findById(id);
