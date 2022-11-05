@@ -2,40 +2,22 @@ import './App.css';
 import {useEffect, useState} from "react";
 import axios from "axios";
 
-import Table from 'react-bootstrap/Table'
+import {BrowserRouter, Route, Routes, useNavigate} from 'react-router-dom';
+import Board from "./templates/Board";
+import PostSave from "./templates/PostSave";
+import Button from "react-bootstrap/Button";
 
 function App() {
-  const [hello, setHello] = useState('')
+    const navigate = useNavigate();
 
-  useEffect(() => {
-    axios.get('/api/hello')
-        .then(res => setHello(res.data))
-        .catch(err => console.log(err));
-  });
-  return (
+    return (
       <div className={"div_1"}>
-          <div className={"div_2"}>
-              <Table striped bordered hover>
-                  <thead className={"thead_1"}>
-                  <tr className={"tr_1"}>
-                      <th>게시글번호</th>
-                      <th>제목</th>
-                      <th>작성자</th>
-                      <th>최종수정일</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>hello</td>
-                        <td>김애용</td>
-                        <td>20221105</td>
-                    </tr>
-                  </tbody>
-              </Table>
-          </div>
+          <Routes>
+              <Route path="/" element={<Board/>}></Route>
+              <Route path="/save" element={<PostSave/>}></Route>
+          </Routes>
       </div>
-  );
+    );
 }
 
 export default App;
