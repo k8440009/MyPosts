@@ -1,20 +1,20 @@
-import './App.css';
 import {useEffect, useState} from "react";
 import axios from "axios";
 
-function App() {
-  const [hello, setHello] = useState('')
+import {BrowserRouter, Route, Routes, useNavigate} from 'react-router-dom';
+import Board from "./templates/Board";
+import PostSave from "./templates/PostSave";
+import Button from "react-bootstrap/Button";
 
-  useEffect(() => {
-    axios.get('/api/hello')
-        .then(res => setHello(res.data))
-        .catch(err => console.log(err));
-  });
-  return (
-      <div>
-        백엔드에서 가져온 데이터입니다. : {hello}
+function App() {
+    return (
+      <div className={"div_1"}>
+          <Routes>
+              <Route path="/" element={<Board/>}></Route>
+              <Route path="/save" element={<PostSave/>}></Route>
+          </Routes>
       </div>
-  );
+    );
 }
 
 export default App;
