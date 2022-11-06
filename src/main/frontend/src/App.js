@@ -1,4 +1,3 @@
-import './App.css';
 import {useEffect, useState} from "react";
 import axios from "axios";
 
@@ -8,8 +7,6 @@ import PostSave from "./templates/PostSave";
 import Button from "react-bootstrap/Button";
 
 function App() {
-    const navigate = useNavigate();
-
     return (
       <div className={"div_1"}>
           <Routes>

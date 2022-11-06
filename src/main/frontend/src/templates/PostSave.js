@@ -34,12 +34,17 @@ function PostSave () {
             .then(function (response) {
                 console.log(JSON.stringify(response))
                 alert("글이 등록되었습니다.")
+
                 navigate('/')
             })
             .catch(function (error) {
                 alert(JSON.stringify(error))
             })
         ;
+    }
+
+    function handleCancel() {
+        navigate('/')
     }
 
 
@@ -62,7 +67,7 @@ function PostSave () {
                 </form>
             </div>
             <Button onClick={saveFunction}>등록</Button>
-            <Button variant="secondary">취소</Button>
+            <Button onClick={handleCancel} variant="secondary">취소</Button>
         </div>
     );
 }
