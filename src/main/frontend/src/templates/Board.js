@@ -9,30 +9,27 @@ import axios from "axios";
 const Board = () => {
     const [data, setData] = useState([])
     const navigate = useNavigate();
+    let getFlag = false; // get 두번 실행 방지
 
     useEffect(() => {
-        axios.get('/api')
-            .then(res =>
-                setData(res.data))
-            .catch(err => console.log(err))
+        if (!getFlag) {
+            axios.get('/api')
+                .then(res =>
+                    setData(res.data))
+                .catch(err => console.log(err))
+            getFlag = true
+        }
     }, [])
+
 
     const tableRows = data.map(
         (item, index) =>
             <tr key={index}>
                 <td>{item.id}</td>
-                <td>{item.title}</td>
+                <td onClick={() => navigate('/update/' + item.id)}>{item.title}</td>
                 <td>{item.author}</td>
             </tr>
     )
-
-    // const tableRows = data.map(function (element, index) {
-    //     <tr key={index}>
-    //         <td>element.id</td>
-    //         <td>element.title</td>
-    //         <td>element.author</td>
-    //     </tr>
-    // });
 
     return (
         <div className={"div_2"}>
