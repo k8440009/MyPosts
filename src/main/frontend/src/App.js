@@ -1,10 +1,8 @@
-import {useEffect, useState} from "react";
-import axios from "axios";
-
-import {BrowserRouter, Route, Routes, useNavigate} from 'react-router-dom';
+import {Route, Routes} from 'react-router-dom';
 import Board from "./templates/Board";
 import PostSave from "./templates/PostSave";
-import Button from "react-bootstrap/Button";
+import PostUpdate from "./templates/PostUpdate";
+import NotFound from "./templates/NotFound";
 
 function App() {
     return (
@@ -12,6 +10,8 @@ function App() {
           <Routes>
               <Route path="/" element={<Board/>}></Route>
               <Route path="/save" element={<PostSave/>}></Route>
+              <Route path="/update/:id" element={<PostUpdate/>}></Route>
+              <Route path = "*" element={<NotFound/>}></Route>
           </Routes>
       </div>
     );

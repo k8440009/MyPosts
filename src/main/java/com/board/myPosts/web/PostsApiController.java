@@ -32,13 +32,12 @@ public class PostsApiController {
 
     @GetMapping("/api")
     public List<PostsListResponseDto> findAllDesc() {
-
-       log.debug("===== START ======");
-//        log.debug(postsService.findAllDesc());
-        log.debug("===== END ======");
         return postsService.findAllDesc();
-//        model.addAttribute("posts", postsService.findAllDesc());
-//        return "index";
     }
 
+    @DeleteMapping("/api/v1/posts/{id}")
+    public Long delete(@PathVariable Long id) {
+        postsService.delete(id);
+        return id;
+    }
 }
